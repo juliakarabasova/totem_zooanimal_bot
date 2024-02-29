@@ -38,7 +38,7 @@ async def start_trivia(message: Message, state: FSMContext):
         builder.adjust(2)
 
         await message.answer(
-            cur_question,
+            cur_question + '\n\n' + '\n'.join(cur_answers),
             reply_markup=builder.as_markup(resize_keyboard=True),
         )
         await state.set_state(TotemAnimal.filled_questions.state)
