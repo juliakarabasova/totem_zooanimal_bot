@@ -8,9 +8,9 @@ logging.basicConfig(filename='totem_animal_bot.log', encoding='utf-8', level=log
 
 try:
     # db = pd.read_csv('totem_animals_db.csv', encoding='utf-8', sep=';')
-    db = pd.read_excel('totem_animals_db.xlsx')
+    db = pd.read_excel('../data/totem_animals_db.xlsx')
     # qs = pd.read_csv('questions_db.csv', encoding='utf-8', sep=';')
-    qs = pd.read_excel('questions_db.xlsx')
+    qs = pd.read_excel('../data/questions_db.xlsx')
 except:
     logging.exception(f'Exception while reading base files: ')
     db = pd.DataFrame()

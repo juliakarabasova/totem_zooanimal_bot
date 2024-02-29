@@ -80,7 +80,7 @@ async def count_result(message: types.Message, state: FSMContext):
 
         builder.adjust(2)
 
-        photo = FSInputFile(f"images/{winner[0]}.jpg")
+        photo = FSInputFile(f"../images/{winner[0]}.jpg")
         await message.answer_photo(
             photo,
             caption=f"{random.choice(start_phrases)} *{winner[1]}*"

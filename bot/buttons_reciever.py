@@ -86,7 +86,8 @@ class FeedbackReciever(StatesGroup):
 async def initiate_feedback(message: types.Message, state: FSMContext):
     await message.answer("В одном следующем сообщении, пожалуйста, напиши отзыв об этой викторине. Мы будем рады, "
                          "если ты оставишь достаточно подробный отзыв! Его получат и прочитают сотрудники зоопарка. "
-                         "Оставь контактную информацию, если хочешь, чтобы с вами связались по поводу этого отзыва:")
+                         "Оставь контактную информацию, если хочешь, чтобы с вами связались по поводу этого отзыва:",
+                         reply_markup=types.reply_keyboard_remove.ReplyKeyboardRemove())
 
     await state.set_state(FeedbackReciever.waiting_for_feedback.state)
 
@@ -96,7 +97,16 @@ async def collect_feedback(message: types.Message, state: FSMContext):
     with open('feedbacks.txt', 'a', encoding='utf-8') as f:
         f.write(f'Новый отзыв от пользователя {message.from_user.id}: {message.text}\n\n')
 
-    await message.answer("Спасибо! Мы приняли твой отзыв и уже внимательно его читаем!")
+    builder = ReplyKeyboardBuilder()
+    builder.add(types.KeyboardButton(text='Взять животное под опеку'))
+    builder.add(types.KeyboardButton(text='Попробовать еще раз'))
+    builder.add(types.KeyboardButton(text='Связаться с сотрудником'))
+    builder.add(types.KeyboardButton(text='Оставить отзыв о викторине'))
+
+    builder.adjust(2)
+
+    await message.answer("Спасибо! Мы приняли твой отзыв и уже внимательно его читаем!",
+                         reply_markup=builder.as_markup(resize_keyboard=True))
 
 
 # @buttons_router.message()
